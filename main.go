@@ -31,7 +31,24 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println("GitHub User Activity CLI")
+	if err := run(username); err != nil {
+		fmt.Fprintf(os.Stderr, "Error: %v.\n", err)
+		os.Exit(1)
+	}
+}
+
+func run(username string) error {
+	client := newGitHubClient()
+
+	response, err := client.fetchActivity(username)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+
+	fmt.Printf("GitHub API response: %s\n", response.Status)
+
+	return nil
 }
 
 func validateUsername(username string) error {
