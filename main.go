@@ -11,6 +11,18 @@ func main() {
 		return
 	}
 
+	if len(os.Args) == 1 {
+		fmt.Fprintln(os.Stderr, "Error: GitHub username is required.")
+		fmt.Fprintln(os.Stderr, "Run 'github-activity --help' for usage.")
+		os.Exit(1)
+	}
+
+	if len(os.Args) > 2 {
+		fmt.Fprintln(os.Stderr, "Error: too many arguments.")
+		fmt.Fprintln(os.Stderr, "Run 'github-activity --help' for usage.")
+		os.Exit(1)
+	}
+
 	fmt.Println("GitHub User Activity CLI")
 }
 
