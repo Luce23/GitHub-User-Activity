@@ -39,3 +39,17 @@ func (client *GitHubClient) newActivityRequest(username string) (*http.Request, 
 
 	return request, nil
 }
+
+func (client *GitHubClient) fetchActivity(username string) (*http.Response, error) {
+	request, err := client.newActivityRequest(username)
+	if err != nil {
+		return nil, err
+	}
+
+	response, err := client.httpClient.Do(request)
+	if err != nil {
+		return nil, fmt.Errorf("send GitHub request: %w", err)
+	}
+
+	return response, nil
+}
